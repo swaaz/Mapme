@@ -21,32 +21,32 @@ const styles = StyleSheet.create({
     card: {
         flexDirection: 'row',
         border: '1px solid grey',
-        width: '80vw',
+        width: 80,
         alignItems: 'center',
-        marginVertical: '10px',
-        borderRadius: '10px'
+        marginVertical: 10,
+        borderRadius: 10
     },
     column: {
         justifyContent: 'space-around',
         alignItems: 'center',
-        paddingHorizontal: '20px',
-        paddingVertical: '10px'
+        paddingHorizontal: 20,
+        paddingVertical: 10
     },
     date : {
-        fontWeight: '700',
-        fontSize: '12px'
+        fontWeight: 700,
+        fontSize: 12
     },
     time: {
-        fontSize: '10px'
+        fontSize: 10
     },
     title : {
-        fontWeight: '600',
+        fontWeight: 60,
         flex: 1,
         textAlign: 'center'
     },
     distance: {
-        fontWeight: '900',
-        paddingHorizontal: '10px'
+        fontWeight: 900,
+        paddingHorizontal: 10
     }
     
 })

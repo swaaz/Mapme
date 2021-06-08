@@ -22,20 +22,20 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#292929',
-        width: '100vw',
+        width: 100,
     },
     logo:{
-        width: '60px',
-        height: '60px',
+        width: 60,
+        height: 60,
     },
     title:{
         color: 'white',
-        fontSize: '20px',
-        marginVertical: '20px'
+        fontSize: 20,
+        marginVertical: 20
     },
     footer:{
         color: 'white',
         position: 'absolute',
-        bottom: '20px'
+        bottom: 20
     }
 })

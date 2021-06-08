@@ -1,9 +1,9 @@
 import React from 'react'
-import { Button, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Button, Image, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 
 const Login = () => {
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <Image 
             source={require('../assets/icons/logo.png')}
             style={styles.logo}
@@ -19,7 +19,7 @@ const Login = () => {
                 </View>
                 <Text style={styles.footer}>Don't have an account? Sign In!</Text>
             </View>
-        </View>
+        </SafeAreaView>
     )
 }
 
@@ -27,61 +27,61 @@ export default Login;
 
 const styles = StyleSheet.create({
     container:{
-        width: '100%',
-        height: '100vh',
+       flex: 1,
         backgroundColor: '#292929',
         alignItems: 'center',
         justifyContent: 'space-between'
     },
     logo:{
-        width: '100px',
-        height: '100px',
-        marginTop: '20vh'
-
+        width: 100,
+        height: 100,
+        marginTop: '30%'
     },
     section: {
-        height: '50vh',
+        height: '50%',
         width: '100%',
         alignItems: 'center',
         backgroundColor: 'white',
-        borderTopLeftRadius: '100px',
+        borderTopLeftRadius: 100,
         alignItems: 'center',
         justifyContent: 'space-around'
 
     },
     header: {
-        fontSize: '40px',
-        letterSpacing: '1px'
+        fontSize: 40,
+        letterSpacing: 1
 
     },
     form: {
-        height: '10vh',
+        // height: 10,
         justifyContent: 'space-around'
     },
     inputs: {
-        marginVertical: '15px',
-        border: '1px solid #cacaca',
-        padding: '7px',
-        borderRadius: '5px'
+        marginVertical: 15,
+        borderWidth: 1,
+        borderColor : '#cacaca',
+        padding: 7,
+        borderRadius: 5,
+        width: 250,
+        // height: 50
     },
     submit : {
         alignItems: 'center',
         backgroundColor: 'black',
-        borderRadius: '5px',
-        marginTop: '15px',
-        marginBottom: '100px'
+        borderRadius: 5,
+        marginTop: 15,
+        // marginBottom: 100
     },
     submitText : {
         color: 'white',
         flexDirection: 'row',
         justifyContent:'center',
         alignItems: 'center',
-        paddingVertical : '10px'
+        paddingVertical : 10
 
     },
     footer: {
         position: 'absolute',
-        bottom: '10px'
+        bottom: 10
     }
-    
 })

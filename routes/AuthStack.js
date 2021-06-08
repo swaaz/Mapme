@@ -4,22 +4,23 @@ import Login from '../screens/Login';
 import SignUp from '../screens/SignUp';
 import HomeScreen from '../screens/HomeScreen';
 const screens = {
+    
     HomeScreen : {
         screen : HomeScreen,
         navigationOptions : {
-            header : null
-        }
-    },
-    Login : {
-        screen : Login,
-        navigationOptions : {
-            header : null
+            headerShown : false
         }
     },
     SignUp : {
         screen: SignUp,
         navigationOptions : {
-            header : null
+            headerShown : false
+        }
+    },
+    Login : {
+        screen : Login,
+        navigationOptions : {
+            headerShown : false
         }
     },
     

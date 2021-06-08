@@ -21,17 +21,16 @@ export default History;
 const styles = StyleSheet.create({
     section: {
         flex: 1,
-        width: '100%',
-        height: '100%',
+        height: 100,
         alignItems: 'center'
 
     },
     title : {
-        fontSize: '30px',
-        paddingVertical: '20px',
+        fontSize: 30,
+        paddingVertical: 20,
     },
     list: {
-        height: '100%',
+        height: 100,
         flex: 1,
     }
 
