@@ -1,9 +1,58 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View , StatusBar} from 'react-native'
-import MapView, { Polyline } from 'react-native-maps';
+import MapView, { Marker, Polyline } from 'react-native-maps';
 import StartTrackingFooter from './StartTrackingFooter';
 import TrackFooterCard from './TrackFooterCard';
+import * as Location from "expo-location";
+
 const HomeScreen = () => {
+    const [isTracking, setIsTracking] = useState(false);
+    const [getCurrentLocation, setCurrentLocation] = useState({
+        latitude: 0.0,
+        longitude: 0.0,
+    })
+
+    const toggle = () => setIsTracking(prev => !prev);
+    const setLocation = (location) => {
+        console.log(location);
+        // setLocation({
+        //     loaded: true,
+        //     isAccepted : true,
+        //     coordinates: {
+        //         lat: location.coords.latitude,
+        //         lng: location.coords.longitude,
+        //     },
+        // });
+    };
+
+    const onError = (error) => {
+        console.log(error);
+        // setLocation({
+        //     loaded: true,
+        //     isAccepted : false,
+        //     error: {
+        //         code: error.code,
+        //         message: error.message,
+        //     },
+        // });
+    };
+
+    useEffect(() => {
+        _getLocationAsync = async () => {
+            let { status } = await Location.requestForegroundPermissionsAsync();
+            if (status !== 'granted') {
+              setErrorMsg('Permission to access location was denied');
+              return;
+            }
+      
+            let locations = await Location.watchPositionAsync({ accuracy: Location.Accuracy.High  }, (loc) => setCurrentLocation({
+                latitude : loc.coords.latitude,
+                longitude : loc.coords.longitude
+            }));
+          };
+          _getLocationAsync()
+    },[])
+
     const Berlin = {
         latitude: 52.5200066,
         longitude: 13.404954
@@ -13,6 +62,8 @@ const HomeScreen = () => {
         latitude: 50.1109221,
         longitude: 8.6821267
       };
+      console.log('region' )
+      console.log(getCurrentLocation);
     return (
         <SafeAreaView style={styles.home}>
             <View style={styles.header} >
@@ -34,23 +85,38 @@ const HomeScreen = () => {
             <View style={styles.maps}>
                 <MapView
                     style={styles.map}
-                    initialRegion={{
-                    latitude: 52.5200066,
-                    longitude: 13.404954,
-                    latitudeDelta: 0.1,
-                    longitudeDelta: 0.1
+                    // initialRegion={{
+                    // latitude: currentLocation.coordinates.latitude,
+                    // longitude: currentLocation.coordinates.longitude,
+                    // latitudeDelta: 0.1,
+                    // longitudeDelta: 0.1
+                    // }}
+
+                    region={{
+                        latitude: getCurrentLocation.latitude,
+                        latitudeDelta: 0.001,
+                        longitude: getCurrentLocation.longitude,
+                        longitudeDelta: 0.001
                     }}
                 >
                     {/* <Polyline 
                     coordinates={[Berlin, Frankfurt]}
                     strokeWidth={6} 
                     strokeColor="#e03e3e" // fallback for when `strokeColors` is not supported by the map-provider
-                    
+
                     /> */}
+                    <Marker
+                        coordinate={{ latitude: getCurrentLocation.latitude, longitude: getCurrentLocation.longitude }}
+                        pinColor="green"
+                        />
                 </MapView>
             </View>
-            {/* <StartTrackingFooter /> */}
-            <TrackFooterCard />
+            {
+                isTracking?
+                    <TrackFooterCard setIsTracking={toggle} />
+                :
+                    <StartTrackingFooter setIsTracking={toggle} />
+            }
             
         </SafeAreaView>
     )

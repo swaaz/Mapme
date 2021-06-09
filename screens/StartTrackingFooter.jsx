@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-const StartTrackingFooter = () => {
+const StartTrackingFooter = (props) => {
     return (
         <View style={styles.footer}>
             <View style={styles.rowOne}>
@@ -22,7 +22,9 @@ const StartTrackingFooter = () => {
                     </View>
                 </TouchableOpacity>
             </View>
-            <TouchableOpacity>
+            <TouchableOpacity
+                onPress={props.setIsTracking}
+            >
                 <View style={styles.rowTwo}>
                     <Image
                         source={require('../assets/icons/walk.png')}
