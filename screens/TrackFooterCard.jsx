@@ -1,7 +1,7 @@
 import React from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
-const TrackFooterCard = () => {
+const TrackFooterCard = (props) => {
     return (
         <View style={styles.footer}>
             <View style={styles.rowOne}>
@@ -36,7 +36,9 @@ const TrackFooterCard = () => {
                     </View>
                 </View>
             </View>
-            <TouchableOpacity>
+            <TouchableOpacity
+                onPress={props.setIsTracking}
+            >
                 <View style={styles.circle}>
                     <Image
                             source={require('../assets/icons/close.png')}
