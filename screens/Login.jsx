@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Image, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Button, Image, KeyboardAvoidingView, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 
 const Login = () => {
     return (
@@ -10,13 +10,15 @@ const Login = () => {
             />
             <View style={styles.section}>
                 <Text style={styles.header}>login</Text>
-                <View style={styles.form}>
-                    <TextInput style={styles.inputs} placeholder='username' />
-                    <TextInput style={styles.inputs} secureTextEntry={true} placeholder='password' />
-                    <TouchableOpacity style={styles.submit} >
-                        <Text style={styles.submitText}>login</Text>
-                    </TouchableOpacity>
-                </View>
+                <KeyboardAvoidingView behavior="padding" >
+                    <View style={styles.form}>
+                        <TextInput style={styles.inputs} placeholder='username' />
+                        <TextInput style={styles.inputs} secureTextEntry={true} placeholder='password' />
+                        <TouchableOpacity style={styles.submit} >
+                            <Text style={styles.submitText}>login</Text>
+                        </TouchableOpacity>
+                    </View>
+                </KeyboardAvoidingView>
                 <Text style={styles.footer}>Don't have an account? Sign In!</Text>
             </View>
         </SafeAreaView>

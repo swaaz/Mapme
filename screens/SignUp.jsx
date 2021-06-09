@@ -1,22 +1,24 @@
 import React from 'react'
-import { Button, Image, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Button, Image, KeyboardAvoidingView, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 
 const Login = () => {
     return (
         <SafeAreaView style={styles.container}>
             <Text style={styles.header}>Sign Up</Text>
             <View style={styles.section}>
-                <View style={styles.form}>
-                    <TextInput style={styles.inputs} placeholder='username' />
-                    <TextInput style={styles.inputs} placeholder='First Name' />
-                    <TextInput style={styles.inputs} placeholder='Last Name' />
-                    <TextInput style={styles.inputs} placeholder='Email' />
-                    <TextInput style={styles.inputs} secureTextEntry={true} placeholder='password' />
-                    <TextInput style={styles.inputs} secureTextEntry={true} placeholder='confirm password' />
-                    <TouchableOpacity style={styles.submit} >
-                        <Text style={styles.submitText}>login</Text>
-                    </TouchableOpacity>
-                </View>
+                <KeyboardAvoidingView behavior="padding">
+                    <View style={styles.form}>
+                        <TextInput style={styles.inputs} placeholder='username' />
+                        <TextInput style={styles.inputs} placeholder='First Name' />
+                        <TextInput style={styles.inputs} placeholder='Last Name' />
+                        <TextInput style={styles.inputs} placeholder='Email' />
+                        <TextInput style={styles.inputs} secureTextEntry={true} placeholder='password' />
+                        <TextInput style={styles.inputs} secureTextEntry={true} placeholder='confirm password' />
+                        <TouchableOpacity style={styles.submit} >
+                            <Text style={styles.submitText}>login</Text>
+                        </TouchableOpacity>
+                    </View>
+                </KeyboardAvoidingView>
                 <Text style={styles.footer}>Don't have an account? Sign In!</Text>
             </View>
         </SafeAreaView>
