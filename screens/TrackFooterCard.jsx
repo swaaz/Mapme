@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Stopwatch } from 'react-native-stopwatch-timer';
 
 const TrackFooterCard = (props) => {
+    
     return (
         <View style={styles.footer}>
             <View style={styles.rowOne}>
@@ -9,7 +11,21 @@ const TrackFooterCard = (props) => {
                     source={require('../assets/icons/timer.png')}
                     style={styles.timer}
                 />
-                <Text style={styles.time}>11:30</Text>
+                {/* <Text style={styles.time}>11:30</Text> */}
+                <Stopwatch
+                laps
+                secs
+                start={props.isTracking}
+                //To start
+                reset={!props.isTracking}
+                //To reset
+                options={options}
+                //options for the styling
+                onFinish={(time)=>console.log(time)}
+                // getTime={(time) => {
+                // console.log(time);
+                // }}
+            />
             </View>
             <View style={styles.rowTwo}>
                 <View style={styles.colOne}>
@@ -127,3 +143,18 @@ const styles = StyleSheet.create({
         height: 20
     }
 })
+
+const options = {
+    container: {
+      padding: 5,
+      borderRadius: 5,
+      width: 200,
+      alignItems: 'center',
+    },
+    text: {
+      fontSize: 25,
+      color: 'black',
+      marginLeft: 7,
+    },
+  };
+  

@@ -4,38 +4,24 @@ import MapView, { Marker, Polyline } from 'react-native-maps';
 import StartTrackingFooter from './StartTrackingFooter';
 import TrackFooterCard from './TrackFooterCard';
 import * as Location from "expo-location";
+// import useLocation from '../hooks/useGeoLocation';
+import {Timer} from 'react-native-stopwatch-timer';
+
 
 const HomeScreen = () => {
+    // const data = useLocation();
+    // console.log(data);
+
     const [isTracking, setIsTracking] = useState(false);
     const [getCurrentLocation, setCurrentLocation] = useState({
-        latitude: 0.0,
+        latitude: 0.0 ,
         longitude: 0.0,
     })
+    const [coordinates, setCoordinates] = useState([]);
 
+   
     const toggle = () => setIsTracking(prev => !prev);
-    const setLocation = (location) => {
-        console.log(location);
-        // setLocation({
-        //     loaded: true,
-        //     isAccepted : true,
-        //     coordinates: {
-        //         lat: location.coords.latitude,
-        //         lng: location.coords.longitude,
-        //     },
-        // });
-    };
-
-    const onError = (error) => {
-        console.log(error);
-        // setLocation({
-        //     loaded: true,
-        //     isAccepted : false,
-        //     error: {
-        //         code: error.code,
-        //         message: error.message,
-        //     },
-        // });
-    };
+    
 
     useEffect(() => {
         _getLocationAsync = async () => {
@@ -45,12 +31,16 @@ const HomeScreen = () => {
               return;
             }
       
-            let locations = await Location.watchPositionAsync({ accuracy: Location.Accuracy.High  }, (loc) => setCurrentLocation({
-                latitude : loc.coords.latitude,
-                longitude : loc.coords.longitude
-            }));
+            let locations = await Location.watchPositionAsync({ accuracy: Location.Accuracy.High  }, (loc) => {
+                setCurrentLocation({
+                    latitude : loc.coords.latitude,
+                    longitude : loc.coords.longitude,
+                })
+                setCoordinates( prev => [...prev, [loc.coords.latitude,loc.coords.longitude]] )
+            }
+            );
           };
-          _getLocationAsync()
+          _getLocationAsync();
     },[])
 
     const Berlin = {
@@ -62,8 +52,10 @@ const HomeScreen = () => {
         latitude: 50.1109221,
         longitude: 8.6821267
       };
-      console.log('region' )
+      console.log('lat')
       console.log(getCurrentLocation);
+      console.log('coords' )
+      console.log(coordinates);
     return (
         <SafeAreaView style={styles.home}>
             <View style={styles.header} >
@@ -83,15 +75,10 @@ const HomeScreen = () => {
                 />
             </View>
             <View style={styles.maps}>
-                <MapView
+                {/* <MapView
                     style={styles.map}
-                    // initialRegion={{
-                    // latitude: currentLocation.coordinates.latitude,
-                    // longitude: currentLocation.coordinates.longitude,
-                    // latitudeDelta: 0.1,
-                    // longitudeDelta: 0.1
-                    // }}
-
+                    showsUserLocation
+                    followsUserLocation
                     region={{
                         latitude: getCurrentLocation.latitude,
                         latitudeDelta: 0.001,
@@ -99,21 +86,37 @@ const HomeScreen = () => {
                         longitudeDelta: 0.001
                     }}
                 >
+                </MapView> */}
+
+                    
+                    {/* // initialRegion={{
+                    // latitude: currentLocation.coordinates.latitude,
+                    // longitude: currentLocation.coordinates.longitude,
+                    // latitudeDelta: 0.1,
+                    // longitudeDelta: 0.1
+                    // }} */}
+
+                  
                     {/* <Polyline 
                     coordinates={[Berlin, Frankfurt]}
                     strokeWidth={6} 
                     strokeColor="#e03e3e" // fallback for when `strokeColors` is not supported by the map-provider
 
                     /> */}
-                    <Marker
+                    {/* <Marker
                         coordinate={{ latitude: getCurrentLocation.latitude, longitude: getCurrentLocation.longitude }}
                         pinColor="green"
-                        />
-                </MapView>
+                        /> */}
+
+            {
+                coordinates.map((item, key) => 
+                    <Text key={key} >{item}</Text>
+                )
+            }
             </View>
             {
                 isTracking?
-                    <TrackFooterCard setIsTracking={toggle} />
+                    <TrackFooterCard setIsTracking={toggle} isTracking={isTracking} />
                 :
                     <StartTrackingFooter setIsTracking={toggle} />
             }
@@ -160,6 +163,9 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         flex: 1,
+
+        alignItems : 'center',
+        justifyContent : 'center'
     },
     map : {
         ...StyleSheet.absoluteFillObject,
