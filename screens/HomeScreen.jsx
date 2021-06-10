@@ -75,17 +75,10 @@ const HomeScreen = () => {
                 />
             </View>
             <View style={styles.maps}>
-                <MapView
+                {/* <MapView
                     style={styles.map}
                     showsUserLocation
                     followsUserLocation
-                    // initialRegion={{
-                    // latitude: currentLocation.coordinates.latitude,
-                    // longitude: currentLocation.coordinates.longitude,
-                    // latitudeDelta: 0.1,
-                    // longitudeDelta: 0.1
-                    // }}
-
                     region={{
                         latitude: getCurrentLocation.latitude,
                         latitudeDelta: 0.001,
@@ -93,6 +86,17 @@ const HomeScreen = () => {
                         longitudeDelta: 0.001
                     }}
                 >
+                </MapView> */}
+
+                    
+                    {/* // initialRegion={{
+                    // latitude: currentLocation.coordinates.latitude,
+                    // longitude: currentLocation.coordinates.longitude,
+                    // latitudeDelta: 0.1,
+                    // longitudeDelta: 0.1
+                    // }} */}
+
+                  
                     {/* <Polyline 
                     coordinates={[Berlin, Frankfurt]}
                     strokeWidth={6} 
@@ -103,7 +107,12 @@ const HomeScreen = () => {
                         coordinate={{ latitude: getCurrentLocation.latitude, longitude: getCurrentLocation.longitude }}
                         pinColor="green"
                         /> */}
-                </MapView>
+
+            {
+                coordinates.map((item, key) => 
+                    <Text key={key} >{item}</Text>
+                )
+            }
             </View>
             {
                 isTracking?
@@ -154,6 +163,9 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         flex: 1,
+
+        alignItems : 'center',
+        justifyContent : 'center'
     },
     map : {
         ...StyleSheet.absoluteFillObject,
