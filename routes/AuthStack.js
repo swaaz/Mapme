@@ -3,10 +3,16 @@ import { createAppContainer } from 'react-navigation';
 import Login from '../screens/Login';
 import SignUp from '../screens/SignUp';
 import HomeScreen from '../screens/HomeScreen';
+import ShowMap from '../screens/ShowMap';
 const screens = {
-    
     HomeScreen : {
         screen : HomeScreen,
+        navigationOptions : {
+            headerShown : false
+        }
+    },
+    ShowMap : {
+        screen : ShowMap,
         navigationOptions : {
             headerShown : false
         }

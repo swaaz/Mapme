@@ -8,7 +8,7 @@ import * as Location from "expo-location";
 import {Timer} from 'react-native-stopwatch-timer';
 
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
     // const data = useLocation();
     // console.log(data);
 
@@ -20,7 +20,14 @@ const HomeScreen = () => {
     const [coordinates, setCoordinates] = useState([]);
 
    
-    const toggle = () => setIsTracking(prev => !prev);
+    const startTrack = () => {
+        setIsTracking(true)
+        setCoordinates( prev => [...prev, getCurrentLocation] );
+    };
+    const EndTrack = () => {
+        setIsTracking(false);
+        navigation.navigate('ShowMap', { currentLocation : getCurrentLocation, coordinates : coordinates });
+    };
     
 
     useEffect(() => {
@@ -36,7 +43,10 @@ const HomeScreen = () => {
                     latitude : loc.coords.latitude,
                     longitude : loc.coords.longitude,
                 })
-                setCoordinates( prev => [...prev, [loc.coords.latitude,loc.coords.longitude]] )
+                if(isTracking) setCoordinates( prev => [...prev, {
+                    latitude : loc.coords.latitude,
+                    longitude : loc.coords.longitude
+                }] );
             }
             );
           };
@@ -75,7 +85,7 @@ const HomeScreen = () => {
                 />
             </View>
             <View style={styles.maps}>
-                {/* <MapView
+                <MapView
                     style={styles.map}
                     showsUserLocation
                     followsUserLocation
@@ -86,7 +96,7 @@ const HomeScreen = () => {
                         longitudeDelta: 0.001
                     }}
                 >
-                </MapView> */}
+                </MapView>
 
                     
                     {/* // initialRegion={{
@@ -103,22 +113,23 @@ const HomeScreen = () => {
                     strokeColor="#e03e3e" // fallback for when `strokeColors` is not supported by the map-provider
 
                     /> */}
+
                     {/* <Marker
                         coordinate={{ latitude: getCurrentLocation.latitude, longitude: getCurrentLocation.longitude }}
                         pinColor="green"
                         /> */}
 
-            {
-                coordinates.map((item, key) => 
+            {/* {
+                coordinates.map((item, key) =>
                     <Text key={key} >{item}</Text>
                 )
-            }
+            } */}
             </View>
             {
                 isTracking?
-                    <TrackFooterCard setIsTracking={toggle} isTracking={isTracking} />
+                    <TrackFooterCard setIsTracking={EndTrack} isTracking={isTracking} />
                 :
-                    <StartTrackingFooter setIsTracking={toggle} />
+                    <StartTrackingFooter setIsTracking={startTrack} />
             }
             
         </SafeAreaView>

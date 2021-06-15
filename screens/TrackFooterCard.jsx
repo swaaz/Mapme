@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
         justifyContent : 'center',
         alignItems : 'center',
         borderRadius : 25,
-        marginBottom : -20,
+        marginBottom : -10,
         backgroundColor : 'white',
         elevation : 5
     },
