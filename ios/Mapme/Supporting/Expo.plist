@@ -10,5 +10,9 @@
     <string>ALWAYS</string>
     <key>EXUpdatesLaunchWaitMs</key>
     <integer>0</integer>
+    <key>EXUpdatesURL</key>
+    <string>https://exp.host/@swaaz/Mapme</string>
+    <key>EXUpdatesReleaseChannel</key>
+    <string>default</string>
   </dict>
 </plist>

@@ -21,17 +21,18 @@ const TrackFooterCard = (props) => {
                 //To reset
                 options={options}
                 //options for the styling
-                onFinish={(time)=>console.log(time)}
-                // getTime={(time) => {
-                // console.log(time);
-                // }}
+                // onFinish={}
+                // getTime={(time)=> props.setTrack(prev => ({
+                //         ...prev,
+                //         time : prev.time + 1
+                //     }))}
             />
             </View>
             <View style={styles.rowTwo}>
                 <View style={styles.colOne}>
                     <Text style={styles.category}>Speed</Text>
                     <View style={styles.values}>
-                        <Text style={styles.valueOne}>45</Text>
+                        <Text style={styles.valueOne}>{props.track.speed}</Text>
                         <Text style={styles.valueTwo}>KMPH</Text>
                     </View>
                 </View>
@@ -39,7 +40,7 @@ const TrackFooterCard = (props) => {
                 <View style={styles.colOne}>
                     <Text style={styles.category}>Distance</Text>
                     <View style={styles.values}>
-                        <Text style={styles.valueOne}>45.5</Text>
+                        <Text style={styles.valueOne}>{props.track.distance}</Text>
                         <Text style={styles.valueTwo}>KM</Text>
                     </View>
                 </View>
@@ -134,7 +135,7 @@ const styles = StyleSheet.create({
         justifyContent : 'center',
         alignItems : 'center',
         borderRadius : 25,
-        marginBottom : -20,
+        marginBottom : -10,
         backgroundColor : 'white',
         elevation : 5
     },

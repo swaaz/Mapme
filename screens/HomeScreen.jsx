@@ -6,13 +6,19 @@ import TrackFooterCard from './TrackFooterCard';
 import * as Location from "expo-location";
 // import useLocation from '../hooks/useGeoLocation';
 import {Timer} from 'react-native-stopwatch-timer';
+import {haversine} from 'haversine';
 
 
-const HomeScreen = () => {
-    // const data = useLocation();
-    // console.log(data);
+const HomeScreen = ({navigation}) => {
+ 
 
     const [isTracking, setIsTracking] = useState(false);
+    const [prevCoords, setPrevCoords] = useState({});
+    const [ track , setTrack ] = useState({
+        distance : 0.0,
+        time : 0,
+        speed : 0
+    });
     const [getCurrentLocation, setCurrentLocation] = useState({
         latitude: 0.0 ,
         longitude: 0.0,
@@ -20,7 +26,15 @@ const HomeScreen = () => {
     const [coordinates, setCoordinates] = useState([]);
 
    
-    const toggle = () => setIsTracking(prev => !prev);
+    const startTrack = () => {
+        setIsTracking(true)
+        setCoordinates( prev => [...prev, getCurrentLocation] );
+        setPrevCoords(getCurrentLocation);
+    };
+    const EndTrack = () => {
+        setIsTracking(false);
+        navigation.navigate('ShowMap', { currentLocation : getCurrentLocation, coordinates : coordinates });
+    };
     
 
     useEffect(() => {
@@ -36,7 +50,18 @@ const HomeScreen = () => {
                     latitude : loc.coords.latitude,
                     longitude : loc.coords.longitude,
                 })
-                setCoordinates( prev => [...prev, [loc.coords.latitude,loc.coords.longitude]] )
+                if(isTracking) {
+                    setCoordinates( prev => [...prev, {
+                        latitude : loc.coords.latitude,
+                        longitude : loc.coords.longitude
+                    }] );
+                    setTrack(prev => ({
+                        ...prev,
+                        distance : prev.distance + haversine(prevCoords, { latitude : loc.coords.latitude, longitude : loc.coords.longitude }),
+                        speed : prev.distance / prev.time
+                    }));
+                    setPrevCoords({ latitude : loc.coords.latitude, longitude : loc.coords.longitude });
+                }
             }
             );
           };
@@ -75,7 +100,7 @@ const HomeScreen = () => {
                 />
             </View>
             <View style={styles.maps}>
-                {/* <MapView
+                <MapView
                     style={styles.map}
                     showsUserLocation
                     followsUserLocation
@@ -86,39 +111,17 @@ const HomeScreen = () => {
                         longitudeDelta: 0.001
                     }}
                 >
-                </MapView> */}
 
-                    
-                    {/* // initialRegion={{
-                    // latitude: currentLocation.coordinates.latitude,
-                    // longitude: currentLocation.coordinates.longitude,
-                    // latitudeDelta: 0.1,
-                    // longitudeDelta: 0.1
-                    // }} */}
+                
+                </MapView>
 
-                  
-                    {/* <Polyline 
-                    coordinates={[Berlin, Frankfurt]}
-                    strokeWidth={6} 
-                    strokeColor="#e03e3e" // fallback for when `strokeColors` is not supported by the map-provider
-
-                    /> */}
-                    {/* <Marker
-                        coordinate={{ latitude: getCurrentLocation.latitude, longitude: getCurrentLocation.longitude }}
-                        pinColor="green"
-                        /> */}
-
-            {
-                coordinates.map((item, key) => 
-                    <Text key={key} >{item}</Text>
-                )
-            }
+                
             </View>
             {
                 isTracking?
-                    <TrackFooterCard setIsTracking={toggle} isTracking={isTracking} />
+                    <TrackFooterCard setIsTracking={EndTrack} isTracking={isTracking} track={track} setTrack={setTrack} />
                 :
-                    <StartTrackingFooter setIsTracking={toggle} />
+                    <StartTrackingFooter setIsTracking={startTrack} />
             }
             
         </SafeAreaView>

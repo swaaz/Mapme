@@ -1,34 +1,16 @@
 {
   "expo": {
-    "name": "Mapme",
-    "slug": "Mapme",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "io.export.clint"
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      },
-      "package": "io.export.client"
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    }
+   "name": "Mapme",
+   "icon": "./assets/icons/logo.png",
+   "version": "1.0.0",
+   "slug": "Mapme",
+   "ios": {
+     "bundleIdentifier": "com.yourcompany.yourappname",
+     "buildNumber": "1.0.0"
+   },
+   "android": {
+     "package": "com.yourcompany.yourappname",
+     "versionCode": 1
+   }
   }
 }
