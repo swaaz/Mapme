@@ -1,7 +1,7 @@
 import React from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
-const ShowDataCard = () => {
+const ShowDataCard = ({navigation}) => {
     return (
         <View style={styles.footer}>
         <View style={styles.rowOne}>
@@ -17,7 +17,6 @@ const ShowDataCard = () => {
             reset={!props.isTracking}
             options={options}
             onFinish={(time)=>console.log(time)}
-            
         /> */}
         </View>
         <View style={styles.rowTwo}>
@@ -46,11 +45,11 @@ const ShowDataCard = () => {
             </View>
         </View>
         <TouchableOpacity
-            onPress={props.setIsTracking}
+            onPress={() => navigation.navigate('HomeScreen')}
         >
             <View style={styles.circle}>
                 <Image
-                        source={require('../assets/icons/close.png')}
+                        source={require('../assets/icons/tick.png')}
                         style={styles.close}
                     />
             </View>

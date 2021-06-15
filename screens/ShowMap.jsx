@@ -1,6 +1,7 @@
 import React from 'react'
 import { Image, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import MapView, { Marker, Polyline } from 'react-native-maps';
+import ShowDataCard from './ShowDataCard';
 import TrackFooterCard from './TrackFooterCard';
 
 
@@ -37,7 +38,7 @@ const ShowMap = ({navigation}) => {
                         longitudeDelta: 0.001
                     }}
                 >
-                </MapView>
+                
 
                     
                     {/* // initialRegion={{
@@ -48,19 +49,20 @@ const ShowMap = ({navigation}) => {
                     // }} */}
 
                   
-                    <Polyline 
+                    <Polyline
                     coordinates={coordinates}
                     strokeWidth={6} 
                     strokeColor="black" // fallback for when `strokeColors` is not supported by the map-provider
 
                     />
+                </MapView>
 
     
 
     
             </View>
           
-            <TrackFooterCard  />
+            <ShowDataCard navigation={navigation} />
            
             
         </SafeAreaView>
