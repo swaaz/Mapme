@@ -1,7 +1,8 @@
 import React from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { formatTime } from '../utils';
 
-const ShowDataCard = ({navigation}) => {
+const ShowDataCard = (props) => {
     return (
         <View style={styles.footer}>
         <View style={styles.rowOne}>
@@ -9,21 +10,14 @@ const ShowDataCard = ({navigation}) => {
                 source={require('../assets/icons/timer.png')}
                 style={styles.timer}
             />
-            {/* <Text style={styles.time}>11:30</Text> */}
-            {/* <Stopwatch
-            laps
-            secs
-            start={props.isTracking}
-            reset={!props.isTracking}
-            options={options}
-            onFinish={(time)=>console.log(time)}
-        /> */}
+            <Text style={styles.time}>{formatTime(props.timer)}</Text>
+            
         </View>
         <View style={styles.rowTwo}>
             <View style={styles.colOne}>
                 <Text style={styles.category}>Speed</Text>
                 <View style={styles.values}>
-                    <Text style={styles.valueOne}>45</Text>
+                    <Text style={styles.valueOne}>{props.track.speed}</Text>
                     <Text style={styles.valueTwo}>KMPH</Text>
                 </View>
             </View>
@@ -31,7 +25,7 @@ const ShowDataCard = ({navigation}) => {
             <View style={styles.colOne}>
                 <Text style={styles.category}>Distance</Text>
                 <View style={styles.values}>
-                    <Text style={styles.valueOne}>45.5</Text>
+                    <Text style={styles.valueOne}>{props.track.distance}</Text>
                     <Text style={styles.valueTwo}>KM</Text>
                 </View>
             </View>
@@ -39,13 +33,13 @@ const ShowDataCard = ({navigation}) => {
             <View style={styles.colOne}>
                 <Text style={styles.category}>Temperature</Text>
                 <View style={styles.values}>
-                    <Text style={styles.valueOne}>45.5</Text>
+                    <Text style={styles.valueOne}>{props.temp}</Text>
                     <Text style={styles.valueTwo}>°C</Text>
                 </View>
             </View>
         </View>
         <TouchableOpacity
-            onPress={() => navigation.navigate('HomeScreen')}
+            onPress={() => props.navigation.navigate('HomeScreen')}
         >
             <View style={styles.circle}>
                 <Image
@@ -72,8 +66,6 @@ const styles = StyleSheet.create({
         backgroundColor : 'white',
         borderRadius : 15,
         marginHorizontal : 20
-    
-
     },
     rowOne : {
         paddingTop : 20,

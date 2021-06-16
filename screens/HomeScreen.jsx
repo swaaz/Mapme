@@ -5,18 +5,16 @@ import StartTrackingFooter from './StartTrackingFooter';
 import TrackFooterCard from './TrackFooterCard';
 import * as Location from "expo-location";
 // import useLocation from '../hooks/useGeoLocation';
-import {Timer} from 'react-native-stopwatch-timer';
 import {haversine} from 'haversine';
-
+import useTimer from '../hooks/useTimer';
 
 const HomeScreen = ({navigation}) => {
- 
+    const { timer, handleStart, handleReset } = useTimer(0);
 
     const [isTracking, setIsTracking] = useState(false);
     const [prevCoords, setPrevCoords] = useState({});
     const [ track , setTrack ] = useState({
         distance : 0.0,
-        time : 0,
         speed : 0
     });
     const [getCurrentLocation, setCurrentLocation] = useState({
@@ -24,19 +22,27 @@ const HomeScreen = ({navigation}) => {
         longitude: 0.0,
     })
     const [coordinates, setCoordinates] = useState([]);
+    const [weather, setWeather] = useState({
+        temperature : 0.0,
+        loaded : false,
+        
+    });
 
    
     const startTrack = () => {
         setIsTracking(true)
         setCoordinates( prev => [...prev, getCurrentLocation] );
         setPrevCoords(getCurrentLocation);
+        handleStart();
     };
     const EndTrack = () => {
         setIsTracking(false);
-        navigation.navigate('ShowMap', { currentLocation : getCurrentLocation, coordinates : coordinates });
+        navigation.navigate('ShowMap', { currentLocation : getCurrentLocation, coordinates : coordinates, timer : timer, track : track, temperature : weather.temperature });
+        handleReset();
     };
-    
 
+ 
+    
     useEffect(() => {
         _getLocationAsync = async () => {
             let { status } = await Location.requestForegroundPermissionsAsync();
@@ -58,7 +64,7 @@ const HomeScreen = ({navigation}) => {
                     setTrack(prev => ({
                         ...prev,
                         distance : prev.distance + haversine(prevCoords, { latitude : loc.coords.latitude, longitude : loc.coords.longitude }),
-                        speed : prev.distance / prev.time
+                        speed : prev.distance / (timer * 3600)
                     }));
                     setPrevCoords({ latitude : loc.coords.latitude, longitude : loc.coords.longitude });
                 }
@@ -66,22 +72,17 @@ const HomeScreen = ({navigation}) => {
             );
           };
           _getLocationAsync();
+          if(!weather.loaded){
+            fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${getCurrentLocation.latitude}&lon=${getCurrentLocation.longitude}&units=metric&appid=`)
+            .then((response) => response.json())
+            .then((json) => setWeather({ temperature : json.main.temp, loaded : true}))
+            .catch((error) => console.error(error))
+            
+          }
     },[])
 
-    const Berlin = {
-        latitude: 52.5200066,
-        longitude: 13.404954
-      };
     
-      const Frankfurt = {
-        latitude: 50.1109221,
-        longitude: 8.6821267
-      };
-      console.log('lat')
-      console.log(getCurrentLocation);
-      console.log('coords' )
-      console.log(coordinates);
-    return (
+     return(
         <SafeAreaView style={styles.home}>
             <View style={styles.header} >
                 <TouchableOpacity>
@@ -119,9 +120,9 @@ const HomeScreen = ({navigation}) => {
             </View>
             {
                 isTracking?
-                    <TrackFooterCard setIsTracking={EndTrack} isTracking={isTracking} track={track} setTrack={setTrack} />
+                    <TrackFooterCard setIsTracking={EndTrack} isTracking={isTracking} track={track} setTrack={setTrack} timer={timer} weather={weather}  />
                 :
-                    <StartTrackingFooter setIsTracking={startTrack} />
+                    <StartTrackingFooter setIsTracking={startTrack}  />
             }
             
         </SafeAreaView>

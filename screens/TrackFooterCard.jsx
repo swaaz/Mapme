@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { Stopwatch } from 'react-native-stopwatch-timer';
-
+import { formatTime } from '../utils/index';
 const TrackFooterCard = (props) => {
     
     return (
@@ -11,22 +11,8 @@ const TrackFooterCard = (props) => {
                     source={require('../assets/icons/timer.png')}
                     style={styles.timer}
                 />
-                {/* <Text style={styles.time}>11:30</Text> */}
-                <Stopwatch
-                laps
-                secs
-                start={props.isTracking}
-                //To start
-                reset={!props.isTracking}
-                //To reset
-                options={options}
-                //options for the styling
-                // onFinish={}
-                // getTime={(time)=> props.setTrack(prev => ({
-                //         ...prev,
-                //         time : prev.time + 1
-                //     }))}
-            />
+                <Text style={styles.time}>{formatTime(props.timer)}</Text>
+            
             </View>
             <View style={styles.rowTwo}>
                 <View style={styles.colOne}>
@@ -48,7 +34,7 @@ const TrackFooterCard = (props) => {
                 <View style={styles.colOne}>
                     <Text style={styles.category}>Temperature</Text>
                     <View style={styles.values}>
-                        <Text style={styles.valueOne}>45.5</Text>
+                        <Text style={styles.valueOne}>{props.weather.temperature}</Text>
                         <Text style={styles.valueTwo}>°C</Text>
                     </View>
                 </View>
@@ -81,7 +67,6 @@ const styles = StyleSheet.create({
         backgroundColor : 'white',
         borderRadius : 15,
         marginHorizontal : 20
-    
 
     },
     rowOne : {

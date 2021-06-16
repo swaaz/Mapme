@@ -8,6 +8,10 @@ import TrackFooterCard from './TrackFooterCard';
 const ShowMap = ({navigation}) => {
     const coordinates = navigation.getParam('coordinates');
     const getCurrentLocation = navigation.getParam('currentLocation');
+    const timer = navigation.getParam('timer');
+    const track = navigation.getParam('track');
+    const temp = navigation.getParam('temperature');
+
     return (
         <SafeAreaView style={styles.home}>
             <View style={styles.header} >
@@ -39,15 +43,6 @@ const ShowMap = ({navigation}) => {
                     }}
                 >
                 
-
-                    
-                    {/* // initialRegion={{
-                    // latitude: currentLocation.coordinates.latitude,
-                    // longitude: currentLocation.coordinates.longitude,
-                    // latitudeDelta: 0.1,
-                    // longitudeDelta: 0.1
-                    // }} */}
-
                   
                     <Polyline
                     coordinates={coordinates}
@@ -62,7 +57,7 @@ const ShowMap = ({navigation}) => {
     
             </View>
           
-            <ShowDataCard navigation={navigation} />
+            <ShowDataCard navigation={navigation} timer={timer} track={track} temp={temp} />
            
             
         </SafeAreaView>
