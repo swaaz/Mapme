@@ -1,16 +1,21 @@
 {
   "expo": {
-   "name": "Mapme",
+   "name": "MapMe",
    "icon": "./assets/icons/logo.png",
-   "version": "1.0.0",
-   "slug": "Mapme",
+   "version": "2.0.0",
+   "slug": "MapMe",
    "ios": {
      "bundleIdentifier": "com.yourcompany.yourappname",
      "buildNumber": "1.0.0"
    },
    "android": {
      "package": "com.yourcompany.yourappname",
-     "versionCode": 1
+     "versionCode": 1,
+        "config": {
+          "googleMaps": {
+              "apiKey": ""
+          }
+      }
    }
   }
 }
