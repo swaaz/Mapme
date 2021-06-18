@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { HistoryContext } from '../Context/HistoryContext';
 import { formatTime } from '../utils';
 
 const ShowDataCard = (props) => {
+    
+
     return (
         <View style={styles.footer}>
         <View style={styles.rowOne}>
@@ -17,7 +20,7 @@ const ShowDataCard = (props) => {
             <View style={styles.colOne}>
                 <Text style={styles.category}>Speed</Text>
                 <View style={styles.values}>
-                    <Text style={styles.valueOne}>{props.track.speed}</Text>
+                    <Text style={styles.valueOne}>{props.speed}</Text>
                     <Text style={styles.valueTwo}>KMPH</Text>
                 </View>
             </View>
@@ -25,7 +28,7 @@ const ShowDataCard = (props) => {
             <View style={styles.colOne}>
                 <Text style={styles.category}>Distance</Text>
                 <View style={styles.values}>
-                    <Text style={styles.valueOne}>{props.track.distance}</Text>
+                    <Text style={styles.valueOne}>{props.distance}</Text>
                     <Text style={styles.valueTwo}>KM</Text>
                 </View>
             </View>
@@ -39,7 +42,7 @@ const ShowDataCard = (props) => {
             </View>
         </View>
         <TouchableOpacity
-            onPress={() => props.navigation.navigate('HomeScreen')}
+            onPress={props.saveHandler}
         >
             <View style={styles.circle}>
                 <Image

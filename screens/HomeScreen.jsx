@@ -7,6 +7,7 @@ import * as Location from "expo-location";
 // import useLocation from '../hooks/useGeoLocation';
 import {haversine} from 'haversine';
 import useTimer from '../hooks/useTimer';
+import Header from './Header';
 
 const HomeScreen = ({navigation}) => {
     const { timer, handleStart, handleReset } = useTimer(0);
@@ -84,22 +85,7 @@ const HomeScreen = ({navigation}) => {
     
      return(
         <SafeAreaView style={styles.home}>
-            <View style={styles.header} >
-                <TouchableOpacity>
-                    <Image
-                        source={require('../assets/icons/menu1.png')}
-                        style={styles.menu}
-                    />
-                </TouchableOpacity>
-                <Image
-                    source={require('../assets/icons/run.png')}
-                    style={styles.logo}
-                />
-                <Image
-                    source={require('../assets/icons/profile.png')}
-                    style={styles.profile}
-                />
-            </View>
+            <Header navigation={navigation} />
             <View style={styles.maps}>
                 <MapView
                     style={styles.map}
@@ -137,32 +123,7 @@ const styles = StyleSheet.create({
         flex: 1,
 
     },
-    header : {
-        position: 'absolute',
-        width: '100%',
-        height: 70,
-        top: StatusBar.currentHeight,
-        flexDirection : 'row',
-        justifyContent: 'space-between',
-        alignItems : 'center',
-        width: '100%',
-        paddingHorizontal : 15,
-        // backgroundColor : 'pink',
-        zIndex : 1
-        
-    },
-    menu : {
-        width: 27,
-        height: 27,
-    },
-    logo : {
-        width: 30,
-        height: 30
-    },
-    profile : {
-        width: 30,
-        height: 30
-    },
+    
     maps: {
         width: '100%',
         height: '100%',

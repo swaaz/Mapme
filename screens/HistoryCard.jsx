@@ -1,17 +1,24 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-const HistoryCard = () => {
+const HistoryCard = (props) => {
+    const tapHandler = () => {
+        props.navigation.navigate('ShowHistoryMap',{ data : props.item});
+    }
     return (
-        <View style={styles.card}>
-            <View style={styles.column}>
-                <Text style={styles.date}>23</Text>
-                <Text style={styles.date}>Jun</Text>
-                <Text style={styles.time}>23:00</Text>
+        <TouchableOpacity
+            onPress={tapHandler}
+        >
+            <View style={styles.card}>
+                <View style={styles.column}>
+                    <Text style={styles.date}>{props.item.item.dateTime.day}</Text>
+                    <Text style={styles.date}>{props.item.item.dateTime.month}</Text>
+                    <Text style={styles.time}>{props.item.item.dateTime.hour}:{props.item.item.dateTime.minutes}</Text>
+                </View>
+                <Text style={styles.title}>Attavar, Mangalore</Text>
+                <Text style={styles.distance}>{props.item.item.distance} KM</Text>
             </View>
-            <Text style={styles.title}>Attavar, Mangalore</Text>
-            <Text style={styles.distance}>1.5 mi</Text>
-        </View>
+        </TouchableOpacity>
     )
 }
 
@@ -20,11 +27,14 @@ export default HistoryCard
 const styles = StyleSheet.create({
     card: {
         flexDirection: 'row',
-        border: '1px solid grey',
-        width: 80,
+        width: '80%',
         alignItems: 'center',
         marginVertical: 10,
-        borderRadius: 10
+        borderRadius: 10,
+        borderWidth : 1,
+        borderColor : 'grey',
+        marginHorizontal : '10%',
+        elevation : 1
     },
     column: {
         justifyContent: 'space-around',
@@ -33,20 +43,19 @@ const styles = StyleSheet.create({
         paddingVertical: 10
     },
     date : {
-        fontWeight: 700,
+        fontWeight: 'bold',
         fontSize: 12
     },
     time: {
         fontSize: 10
     },
     title : {
-        fontWeight: 60,
+        fontWeight: '100',
         flex: 1,
         textAlign: 'center'
     },
     distance: {
-        fontWeight: 900,
+        fontWeight: '900',
         paddingHorizontal: 10
     }
-    
 })

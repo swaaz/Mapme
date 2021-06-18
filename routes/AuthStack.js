@@ -1,5 +1,4 @@
 import { createStackNavigator } from 'react-navigation-stack';
-import { createAppContainer } from 'react-navigation';
 import Login from '../screens/Login';
 import SignUp from '../screens/SignUp';
 import HomeScreen from '../screens/HomeScreen';
@@ -35,4 +34,4 @@ const screens = {
 
 const AuthStack = createStackNavigator(screens);
 
-export default createAppContainer(AuthStack);
+export default AuthStack;
