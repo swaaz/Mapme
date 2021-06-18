@@ -1,37 +1,16 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { Image, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import MapView, { Marker, Polyline } from 'react-native-maps';
-import { HistoryContext } from '../Context/HistoryContext';
 import ShowDataCard from './ShowDataCard';
+import TrackFooterCard from './TrackFooterCard';
 
-const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-const ShowMap = ({navigation}) => {
-    const coordinates = navigation.getParam('coordinates');
-    const getCurrentLocation = navigation.getParam('currentLocation');
-    const timer = navigation.getParam('timer');
-    const track = navigation.getParam('track');
-    const temp = navigation.getParam('temperature');
+const ShowHistoryMap = ({navigation}) => {
+    const data = navigation.getParam('data');
 
-    const [history, setHistory] = useContext(HistoryContext);
-    const date = new Date;
-    const saveHandler = () => {
-        setHistory((prev) => [...prev, {
-            time : timer,
-            distance : track.distance,
-            speed : track.speed,
-            temperature : temp,
-            dateTime : {
-                day : date.getDate(),
-                month : months[date.getMonth()],
-                hour : date.getHours(),
-                minutes : date.getMinutes()
-            },
-            coordinates : coordinates
-        } ]);
-        navigation.navigate('HomeScreen');
+    const saveHandler= () =>{
+        navigation.navigate('History');
     }
-
     return (
         <SafeAreaView style={styles.home}>
             <View style={styles.header} >
@@ -56,14 +35,16 @@ const ShowMap = ({navigation}) => {
                     showsUserLocation
                     followsUserLocation
                     region={{
-                        latitude: getCurrentLocation.latitude,
+                        latitude: data.item.coordinates[0].latitude,
                         latitudeDelta: 0.001,
-                        longitude: getCurrentLocation.longitude,
+                        longitude: data.item.coordinates[0].longitude,
                         longitudeDelta: 0.001
                     }}
                 >
+                
+                  
                     <Polyline
-                    coordinates={coordinates}
+                    coordinates={data.item.coordinates}
                     strokeWidth={6} 
                     strokeColor="black" // fallback for when `strokeColors` is not supported by the map-provider
 
@@ -75,14 +56,14 @@ const ShowMap = ({navigation}) => {
     
             </View>
           
-    <ShowDataCard timer={timer} speed={track.speed} distance={track.distance} temp={temp} saveHandler={saveHandler} />
+            <ShowDataCard saveHandler={saveHandler} timer={data.item.time} speed={data.item.speed} distance={data.item.distance} temp={data.item.temperature} />
            
             
         </SafeAreaView>
     )
 }
 
-export default ShowMap
+export default ShowHistoryMap
 
 const styles = StyleSheet.create({
     home : {

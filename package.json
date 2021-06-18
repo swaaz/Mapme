@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@react-native-mapbox-gl/maps": "^8.2.0-beta2",
+    "@react-navigation/drawer": "^5.12.5",
     "expo": "~41.0.1",
     "expo-location": "~12.0.4",
     "expo-splash-screen": "~0.10.2",
@@ -27,7 +28,9 @@
     "react-native-unimodules": "~0.13.3",
     "react-native-web": "~0.13.12",
     "react-navigation": "^4.4.4",
-    "react-navigation-stack": "^2.10.4"
+    "react-navigation-drawer": "^2.7.1",
+    "react-navigation-stack": "^2.10.4",
+    "realm": "^10.4.2"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"
