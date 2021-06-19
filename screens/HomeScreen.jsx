@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View , StatusBar} from 'react-native'
-import MapView, { Marker, Polyline } from 'react-native-maps';
+import MapView, { Polyline } from 'react-native-maps';
 import StartTrackingFooter from './StartTrackingFooter';
 import TrackFooterCard from './TrackFooterCard';
 import * as Location from "expo-location";
@@ -26,7 +26,6 @@ const HomeScreen = ({navigation}) => {
     const [weather, setWeather] = useState({
         temperature : 0.0,
         loaded : false,
-        
     });
 
    
@@ -98,7 +97,12 @@ const HomeScreen = ({navigation}) => {
                         longitudeDelta: 0.001
                     }}
                 >
+                    <Polyline
+                    coordinates={coordinates}
+                    strokeWidth={6} 
+                    strokeColor="black" // fallback for when `strokeColors` is not supported by the map-provider
 
+                    />
                 
                 </MapView>
 

@@ -3,7 +3,15 @@ import Login from '../screens/Login';
 import SignUp from '../screens/SignUp';
 import HomeScreen from '../screens/HomeScreen';
 import ShowMap from '../screens/ShowMap';
+import LoadPage from '../screens/LoadPage';
+
 const screens = {
+    LoadPage : {
+        screen : LoadPage,
+        navigationOptions : {
+            headerShown : false
+        }
+    },
     HomeScreen : {
         screen : HomeScreen,
         navigationOptions : {
