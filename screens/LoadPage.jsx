@@ -1,7 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 
-const LoadPage = () => {
+const LoadPage = ({navigation}) => {
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            navigation.navigate('HomeScreen')
+          }, 3000);
+    }, [])
     return (
         <View style={styles.container}>
             <Image
@@ -22,11 +27,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#292929',
-        width: 100,
+        width: '100%',
     },
     logo:{
-        width: 60,
-        height: 60,
+        width: 90,
+        height: 90,
     },
     title:{
         color: 'white',

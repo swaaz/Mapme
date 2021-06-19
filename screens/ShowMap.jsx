@@ -13,10 +13,10 @@ const ShowMap = ({navigation}) => {
     const track = navigation.getParam('track');
     const temp = navigation.getParam('temperature');
 
-    const [history, setHistory] = useContext(HistoryContext);
+    const [history, setUpdate] = useContext(HistoryContext);
     const date = new Date;
     const saveHandler = () => {
-        setHistory((prev) => [...prev, {
+        setUpdate({
             time : timer,
             distance : track.distance,
             speed : track.speed,
@@ -28,7 +28,7 @@ const ShowMap = ({navigation}) => {
                 minutes : date.getMinutes()
             },
             coordinates : coordinates
-        } ]);
+        });
         navigation.navigate('HomeScreen');
     }
 
