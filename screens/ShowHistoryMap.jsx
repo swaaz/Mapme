@@ -32,7 +32,7 @@ const ShowHistoryMap = ({navigation}) => {
             <View style={styles.maps}>
                 <MapView
                     style={styles.map}
-                    showsUserLocation
+                    // showsUserLocation
                     followsUserLocation
                     region={{
                         latitude: data.item.coordinates[0].latitude,

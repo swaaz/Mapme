@@ -79,8 +79,9 @@ const styles = StyleSheet.create({
         height: 15,
     },
     time : {
-        fontSize : 30,
-        fontWeight : "700"
+        fontSize : 25,
+        fontWeight : "700",
+        marginVertical : 10
     },
     rowTwo : {
         alignItems : 'center',
