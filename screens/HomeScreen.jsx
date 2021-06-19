@@ -30,10 +30,11 @@ const HomeScreen = ({navigation}) => {
 
    
     const startTrack = () => {
-        setIsTracking(true)
-        setCoordinates( prev => [...prev, getCurrentLocation] );
+        setCoordinates( [getCurrentLocation] );
+        setIsTracking(true);
         setPrevCoords(getCurrentLocation);
         handleStart();
+
     };
     const EndTrack = () => {
         setIsTracking(false);
@@ -42,7 +43,8 @@ const HomeScreen = ({navigation}) => {
     };
 
  
-    
+   
+
     useEffect(() => {
         _getLocationAsync = async () => {
             let { status } = await Location.requestForegroundPermissionsAsync();
@@ -51,27 +53,30 @@ const HomeScreen = ({navigation}) => {
               return;
             }
       
-            let locations = await Location.watchPositionAsync({ accuracy: Location.Accuracy.High  }, (loc) => {
+            let locations = await Location.watchPositionAsync({ accuracy: Location.Accuracy.High,distanceInterval: 1  }, (loc) => {
+    
                 setCurrentLocation({
                     latitude : loc.coords.latitude,
                     longitude : loc.coords.longitude,
                 })
+                console.log(`${isTracking} outside`);
                 if(isTracking) {
+                    console.log('tracking');
                     setCoordinates( prev => [...prev, {
                         latitude : loc.coords.latitude,
                         longitude : loc.coords.longitude
                     }] );
-                    setTrack(prev => ({
-                        ...prev,
-                        distance : prev.distance + haversine(prevCoords, { latitude : loc.coords.latitude, longitude : loc.coords.longitude }),
-                        speed : prev.distance / (timer * 3600)
-                    }));
+                    // setTrack(prev => ({
+                    //     ...prev,
+                    //     distance : prev.distance + haversine(prevCoords, { latitude : loc.coords.latitude, longitude : loc.coords.longitude }),
+                    //     speed : prev.distance / (timer * 3600)
+                    // }));
                     setPrevCoords({ latitude : loc.coords.latitude, longitude : loc.coords.longitude });
                 }
             }
             );
           };
-          _getLocationAsync();
+        _getLocationAsync();
           if(!weather.loaded){
             fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${getCurrentLocation.latitude}&lon=${getCurrentLocation.longitude}&units=metric&appid=`)
             .then((response) => response.json())
@@ -79,9 +84,9 @@ const HomeScreen = ({navigation}) => {
             .catch((error) => console.error(error))
             
           }
-    },[])
+    },[isTracking])
 
-    
+    // console.log(isTracking);
      return(
         <SafeAreaView style={styles.home}>
             <Header navigation={navigation} />
@@ -97,12 +102,12 @@ const HomeScreen = ({navigation}) => {
                         longitudeDelta: 0.001
                     }}
                 >
-                    <Polyline
+                    {/* <Polyline
                     coordinates={coordinates}
                     strokeWidth={6} 
                     strokeColor="black" // fallback for when `strokeColors` is not supported by the map-provider
 
-                    />
+                    /> */}
                 
                 </MapView>
 
@@ -127,7 +132,7 @@ const styles = StyleSheet.create({
         flex: 1,
 
     },
-    
+
     maps: {
         width: '100%',
         height: '100%',
