@@ -40,6 +40,7 @@ const HomeScreen = ({navigation}) => {
         setIsTracking(false);
         navigation.navigate('ShowMap', { currentLocation : getCurrentLocation, coordinates : coordinates, timer : timer, track : track, temperature : weather.temperature });
         handleReset();
+        setCoordinates([]);
     };
 
  
