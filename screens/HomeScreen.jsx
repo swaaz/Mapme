@@ -27,13 +27,58 @@ const HomeScreen = ({navigation}) => {
         temperature : 0.0,
         loaded : false,
     });
+    // getLoc = async () => {
+    //         let { status } = await Location.requestForegroundPermissionsAsync();
+    //     if (status !== 'granted') {
+    //       setErrorMsg('Permission to access location was denied');
+    //       return;
+    //     }
+  
+    //     let locations = await Location.watchPositionAsync({ accuracy: Location.Accuracy.High,distanceInterval: 1  }, (loc) => console.log(loc));
+    // };
 
-   
+    const _watchLocationAsync = async () => {
+        console.log('tracking');
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+          setErrorMsg('Permission to access location was denied');
+          return;
+        }
+  
+        let locations = await Location.watchPositionAsync({ accuracy: Location.Accuracy.High,distanceInterval: 1  }, (loc) => {
+            console.log(loc.coords);
+            console.log(isTracking);
+        });
+    };
+
+            // setCurrentLocation({
+            //     latitude : loc.coords.latitude,
+            //     longitude : loc.coords.longitude,
+            // })
+            // console.log(`${isTracking} outside`);
+            // if(isTracking) {
+            //     console.log('tracking');
+            //     setCoordinates( prev => [...prev, {
+            //         latitude : loc.coords.latitude,
+            //         longitude : loc.coords.longitude
+            //     }] );
+            //     setTrack(prev => ({
+            //         ...prev,
+            //         distance : prev.distance + haversine(prevCoords, { latitude : loc.coords.latitude, longitude : loc.coords.longitude }),
+            //         speed : prev.distance / (timer * 3600)
+            //     }));
+                // setPrevCoords({ latitude : loc.coords.latitude, longitude : loc.coords.longitude });
+            
+        
+       
+     
+
     const startTrack = () => {
         setCoordinates( [getCurrentLocation] );
         setIsTracking(true);
         setPrevCoords(getCurrentLocation);
         handleStart();
+
 
     };
     const EndTrack = () => {
@@ -43,49 +88,36 @@ const HomeScreen = ({navigation}) => {
         setCoordinates([]);
     };
 
- 
-   
-
-    useEffect(() => {
-        _getLocationAsync = async () => {
-            let { status } = await Location.requestForegroundPermissionsAsync();
-            if (status !== 'granted') {
-              setErrorMsg('Permission to access location was denied');
-              return;
-            }
-      
-            let locations = await Location.watchPositionAsync({ accuracy: Location.Accuracy.High,distanceInterval: 1  }, (loc) => {
     
-                setCurrentLocation({
-                    latitude : loc.coords.latitude,
-                    longitude : loc.coords.longitude,
-                })
-                console.log(`${isTracking} outside`);
-                if(isTracking) {
-                    console.log('tracking');
-                    setCoordinates( prev => [...prev, {
-                        latitude : loc.coords.latitude,
-                        longitude : loc.coords.longitude
-                    }] );
-                    // setTrack(prev => ({
-                    //     ...prev,
-                    //     distance : prev.distance + haversine(prevCoords, { latitude : loc.coords.latitude, longitude : loc.coords.longitude }),
-                    //     speed : prev.distance / (timer * 3600)
-                    // }));
-                    setPrevCoords({ latitude : loc.coords.latitude, longitude : loc.coords.longitude });
-                }
-            }
-            );
-          };
+    
+    _getLocationAsync = async () => {
+        let { status } = await Location.requestPermissionsAsync();
+        if (status !== 'granted') {
+            setErrorMsg('Permission to access location was denied');
+            return;
+        }
+
+        let location = await Location.getCurrentPositionAsync({  accuracy: Location.Accuracy.High });
+        // this.setState({ location });
+        console.log(location);
+        setCurrentLocation({
+            latitude : location.coords.latitude,
+            longitude : location.coords.longitude
+        });
+    };
+  
+    useEffect(() => {
+        console.log('elepahnt');
         _getLocationAsync();
           if(!weather.loaded){
             fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${getCurrentLocation.latitude}&lon=${getCurrentLocation.longitude}&units=metric&appid=`)
             .then((response) => response.json())
             .then((json) => setWeather({ temperature : json.main.temp, loaded : true}))
             .catch((error) => console.error(error))
-            
           }
-    },[isTracking])
+          _watchLocationAsync();
+
+    },[])
 
     // console.log(isTracking);
      return(
