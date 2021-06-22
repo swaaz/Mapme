@@ -18,7 +18,7 @@ const TrackFooterCard = (props) => {
                 <View style={styles.colOne}>
                     <Text style={styles.category}>Speed</Text>
                     <View style={styles.values}>
-                        <Text style={styles.valueOne}>0</Text>
+                        <Text style={styles.valueOne}>{props.track.speed}</Text>
                         <Text style={styles.valueTwo}>KMPH</Text>
                     </View>
                 </View>

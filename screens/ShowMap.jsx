@@ -57,9 +57,9 @@ const ShowMap = ({navigation}) => {
                     followsUserLocation
                     region={{
                         latitude: getCurrentLocation.latitude,
-                        latitudeDelta: 0.001,
+                        latitudeDelta: 0.01,
                         longitude: getCurrentLocation.longitude,
-                        longitudeDelta: 0.001
+                        longitudeDelta: 0.01
                     }}
                 >
                     <Polyline
