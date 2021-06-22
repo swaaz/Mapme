@@ -105,6 +105,7 @@ const HomeScreen = ({navigation}) => {
         setTrack({
             distance : 0.0
         });
+        setCoordinates([]);
         _getLocationAsync();
           if(!weather.loaded){
             fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${getCurrentLocation.latitude}&lon=${getCurrentLocation.longitude}&units=metric&appid=`)
@@ -132,12 +133,12 @@ const HomeScreen = ({navigation}) => {
                         longitudeDelta: 0.001
                     }}
                 >
-                    {/* <Polyline
+                    <Polyline
                     coordinates={coordinates}
                     strokeWidth={6} 
                     strokeColor="black" // fallback for when `strokeColors` is not supported by the map-provider
 
-                    /> */}
+                    />
                 
                 </MapView>
 
