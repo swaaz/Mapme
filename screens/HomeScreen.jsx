@@ -38,21 +38,22 @@ const HomeScreen = ({navigation}) => {
           return;
         }
   
-        let locations = await Location.watchPositionAsync({ accuracy: Location.Accuracy.High,distanceInterval: 1  }, (loc) => {
+        let locations = await Location.watchPositionAsync({ accuracy: Location.Accuracy.High, distanceInterval: 1  }, (loc) => {
+            console.log(loc.coords.speed);
           setCurrentLocation({
                 latitude : loc.coords.latitude,
                 longitude : loc.coords.longitude,
             })
-            console.log(`${isTracking} outside`);
+            // console.log(`${isTracking} outside`);
             if(isTracking) {
-                console.log('tracking');
+                // console.log('tracking');
                 setCoordinates( prev => [...prev, {
                     latitude : loc.coords.latitude,
                     longitude : loc.coords.longitude
                 }] );
                 setTrack(prev => ({
                     ...prev,
-                    distance : prev.distance + haversine(prevCoords, { latitude : loc.coords.latitude, longitude : loc.coords.longitude }),
+                    distance : prev.distance + 0.001,
                     // speed : prev.distance / (timer * 3600)
                 }));
                 setPrevCoords({ latitude : loc.coords.latitude, longitude : loc.coords.longitude });
@@ -101,9 +102,9 @@ const HomeScreen = ({navigation}) => {
     };
   
     useEffect(() => {
-        // setTrack({
-        //     distance : 0.0
-        // });
+        setTrack({
+            distance : 0.0
+        });
         _getLocationAsync();
           if(!weather.loaded){
             fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${getCurrentLocation.latitude}&lon=${getCurrentLocation.longitude}&units=metric&appid=`)
