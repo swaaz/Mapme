@@ -9,6 +9,7 @@ import * as Location from "expo-location";
 import useTimer from '../hooks/useTimer';
 import Header from './Header';
 const haversine = require('haversine');
+import { getDistance, getPreciseDistance } from 'geolib';
 
 const HomeScreen = ({navigation}) => {
     const { timer, handleStart, handleReset } = useTimer(0);
@@ -39,23 +40,38 @@ const HomeScreen = ({navigation}) => {
         }
   
         let locations = await Location.watchPositionAsync({ accuracy: Location.Accuracy.High, distanceInterval: 1  }, (loc) => {
-            console.log(loc.coords.speed);
-          setCurrentLocation({
+            console.log(getPreciseDistance(
+                prevCoords,
+                {latitude: loc.coords.latitude , longitude: loc.coords.longitude},
+              ));
+            // console.log(loc.coords.speed);
+            setCurrentLocation({
                 latitude : loc.coords.latitude,
                 longitude : loc.coords.longitude,
             })
             // console.log(`${isTracking} outside`);
             if(isTracking) {
-                // console.log('tracking');
+                console.log('speed');
+                console.log(loc.coords.speed)
                 setCoordinates( prev => [...prev, {
                     latitude : loc.coords.latitude,
                     longitude : loc.coords.longitude
                 }] );
-                setTrack(prev => ({
-                    ...prev,
-                    distance : prev.distance + 0.001,
-                    // speed : prev.distance / (timer * 3600)
-                }));
+                if(getPreciseDistance( prevCoords,  { latitude: loc.coords.latitude , longitude: loc.coords.longitude }) !== NaN){
+                    setTrack(prev => {
+                        distance :  getPreciseDistance(
+                            prevCoords,
+                            {latitude: loc.coords.latitude , longitude: loc.coords.longitude},
+                          )?
+                          prev.distance 
+                          :
+                          getPreciseDistance(
+                            prevCoords,
+                            {latitude: loc.coords.latitude , longitude: loc.coords.longitude},
+                          )
+                    });
+                }
+                // if(loc.coords.speed > 0) setTrack({ speed : Math.round(loc.coords.speed) });
                 setPrevCoords({ latitude : loc.coords.latitude, longitude : loc.coords.longitude });
             }
         });
