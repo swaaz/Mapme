@@ -5,9 +5,10 @@ import StartTrackingFooter from './StartTrackingFooter';
 import TrackFooterCard from './TrackFooterCard';
 import * as Location from "expo-location";
 // import useLocation from '../hooks/useGeoLocation';
-import {haversine} from 'haversine';
+// import {haversine} from 'haversine';
 import useTimer from '../hooks/useTimer';
 import Header from './Header';
+const haversine = require('haversine');
 
 const HomeScreen = ({navigation}) => {
     const { timer, handleStart, handleReset } = useTimer(0);
@@ -27,15 +28,7 @@ const HomeScreen = ({navigation}) => {
         temperature : 0.0,
         loaded : false,
     });
-    // getLoc = async () => {
-    //         let { status } = await Location.requestForegroundPermissionsAsync();
-    //     if (status !== 'granted') {
-    //       setErrorMsg('Permission to access location was denied');
-    //       return;
-    //     }
-  
-    //     let locations = await Location.watchPositionAsync({ accuracy: Location.Accuracy.High,distanceInterval: 1  }, (loc) => console.log(loc));
-    // };
+   
 
     const _watchLocationAsync = async () => {
         console.log('tracking');
@@ -46,31 +39,29 @@ const HomeScreen = ({navigation}) => {
         }
   
         let locations = await Location.watchPositionAsync({ accuracy: Location.Accuracy.High,distanceInterval: 1  }, (loc) => {
-            console.log(loc.coords);
-            console.log(isTracking);
+          setCurrentLocation({
+                latitude : loc.coords.latitude,
+                longitude : loc.coords.longitude,
+            })
+            console.log(`${isTracking} outside`);
+            if(isTracking) {
+                console.log('tracking');
+                setCoordinates( prev => [...prev, {
+                    latitude : loc.coords.latitude,
+                    longitude : loc.coords.longitude
+                }] );
+                setTrack(prev => ({
+                    ...prev,
+                    distance : prev.distance + haversine(prevCoords, { latitude : loc.coords.latitude, longitude : loc.coords.longitude }),
+                    // speed : prev.distance / (timer * 3600)
+                }));
+                setPrevCoords({ latitude : loc.coords.latitude, longitude : loc.coords.longitude });
+            }
         });
+        
     };
 
-            // setCurrentLocation({
-            //     latitude : loc.coords.latitude,
-            //     longitude : loc.coords.longitude,
-            // })
-            // console.log(`${isTracking} outside`);
-            // if(isTracking) {
-            //     console.log('tracking');
-            //     setCoordinates( prev => [...prev, {
-            //         latitude : loc.coords.latitude,
-            //         longitude : loc.coords.longitude
-            //     }] );
-            //     setTrack(prev => ({
-            //         ...prev,
-            //         distance : prev.distance + haversine(prevCoords, { latitude : loc.coords.latitude, longitude : loc.coords.longitude }),
-            //         speed : prev.distance / (timer * 3600)
-            //     }));
-                // setPrevCoords({ latitude : loc.coords.latitude, longitude : loc.coords.longitude });
-            
         
-       
      
 
     const startTrack = () => {
@@ -86,6 +77,9 @@ const HomeScreen = ({navigation}) => {
         navigation.navigate('ShowMap', { currentLocation : getCurrentLocation, coordinates : coordinates, timer : timer, track : track, temperature : weather.temperature });
         handleReset();
         setCoordinates([]);
+        setTrack({
+            distance : 0.0
+        });
     };
 
     
@@ -107,7 +101,9 @@ const HomeScreen = ({navigation}) => {
     };
   
     useEffect(() => {
-        console.log('elepahnt');
+        // setTrack({
+        //     distance : 0.0
+        // });
         _getLocationAsync();
           if(!weather.loaded){
             fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${getCurrentLocation.latitude}&lon=${getCurrentLocation.longitude}&units=metric&appid=`)
@@ -117,7 +113,7 @@ const HomeScreen = ({navigation}) => {
           }
           _watchLocationAsync();
 
-    },[])
+    },[isTracking])
 
     // console.log(isTracking);
      return(
@@ -177,5 +173,4 @@ const styles = StyleSheet.create({
     map : {
         ...StyleSheet.absoluteFillObject,
     },
-    
 })
