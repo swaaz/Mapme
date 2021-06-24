@@ -18,7 +18,7 @@ const ShowDataCard = (props) => {
         </View>
         <View style={styles.rowTwo}>
             <View style={styles.colOne}>
-                <Text style={styles.category}>Speed</Text>
+                <Text style={styles.category}>Avg Speed</Text>
                 <View style={styles.values}>
                     <Text style={styles.valueOne}>{props.speed}</Text>
                     <Text style={styles.valueTwo}>KMPH</Text>

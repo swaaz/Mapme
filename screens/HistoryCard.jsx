@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import Geocoder from 'react-native-geocoder';
 
 const HistoryCard = (props) => {
+    
     const tapHandler = () => {
         props.navigation.navigate('ShowHistoryMap',{ data : props.item});
     }

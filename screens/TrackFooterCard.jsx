@@ -3,7 +3,9 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { Stopwatch } from 'react-native-stopwatch-timer';
 import { formatTime } from '../utils/index';
 const TrackFooterCard = (props) => {
-    
+    // console.log('dis inside');
+    // console.log(props.distance);
+
     return (
         <View style={styles.footer}>
             <View style={styles.rowOne}>
@@ -12,11 +14,11 @@ const TrackFooterCard = (props) => {
                     style={styles.timer}
                 />
                 <Text style={styles.time}>{formatTime(props.timer)}</Text>
-            
+
             </View>
             <View style={styles.rowTwo}>
                 <View style={styles.colOne}>
-                    <Text style={styles.category}>Speed</Text>
+                    <Text style={styles.category}>Avg Speed</Text>
                     <View style={styles.values}>
                         <Text style={styles.valueOne}>{props.track.speed}</Text>
                         <Text style={styles.valueTwo}>KMPH</Text>

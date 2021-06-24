@@ -8,7 +8,7 @@ import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
 import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
-
+import com.devfd.RNGeocoder.RNGeocoderPackage; 
 import expo.modules.splashscreen.singletons.SplashScreen;
 import expo.modules.splashscreen.SplashScreenImageResizeMode;
 
@@ -43,6 +43,13 @@ public class MainActivity extends ReactActivity {
     }
 
     @Override
+  protected List<ReactPackage> getPackages() {
+    return Arrays.<ReactPackage>asList(
+            new MainReactPackage(),
+            new RNGeocoderPackage());
+  }
+
+    @Override
     protected ReactActivityDelegate createReactActivityDelegate() {
         return new ReactActivityDelegate(this, getMainComponentName()) {
             @Override
@@ -51,4 +58,7 @@ public class MainActivity extends ReactActivity {
             }
         };
     }
+
+
+
 }

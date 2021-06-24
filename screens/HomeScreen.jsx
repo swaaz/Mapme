@@ -17,7 +17,7 @@ const HomeScreen = ({navigation}) => {
     const [isTracking, setIsTracking] = useState(false);
     const [prevCoords, setPrevCoords] = useState({});
     const [ track , setTrack ] = useState({
-        distance : 0.0,
+        distance : 0,
         speed : 0
     });
     const [getCurrentLocation, setCurrentLocation] = useState({
@@ -31,43 +31,8 @@ const HomeScreen = ({navigation}) => {
     });
    
 
-    const _watchLocationAsync = async () => {
-        let { status } = await Location.requestForegroundPermissionsAsync();
-        if (status !== 'granted') {
-          setErrorMsg('Permission to access location was denied');
-          return;
-        }
   
-        let locations = await Location.watchPositionAsync({ accuracy: Location.Accuracy.High, distanceInterval: 1  }, (loc) => {
-          setCurrentLocation({
-                latitude : loc.coords.latitude,
-                longitude : loc.coords.longitude,
-            })
-            if(isTracking) {
-                setCoordinates( prev => [...prev, {
-                    latitude : loc.coords.latitude,
-                    longitude : loc.coords.longitude
-                }] );
-                const distance = getPreciseDistance( prevCoords , { latitude: loc.coords.latitude, longitude: loc.coords.longitude } ) / 1000;
-                console.log('distance');
 
-                console.log(distance);
-                setTrack({ distance : 100});
-                // if (distance > 0) {
-                //     setTrack({ distance : distance  });
-                // }
-                // setTrack(prev => ({
-                //         distance : prev.distance + haversine(prevCoords, { latitude : loc.coords.latitude, longitude : loc.coords.longitude }),
-                //     }))
-                if(loc.coords.speed > 0) setTrack({ speed : Math.round(loc.coords.speed)});
-                setPrevCoords({ latitude : loc.coords.latitude, longitude : loc.coords.longitude });
-            }
-        });
-        
-    };
-
-        
-     
 
     const startTrack = () => {
         setCoordinates( [getCurrentLocation] );
@@ -87,8 +52,6 @@ const HomeScreen = ({navigation}) => {
         });
     };
 
-    
-    
     _getLocationAsync = async () => {
         let { status } = await Location.requestPermissionsAsync();
         if (status !== 'granted') {
@@ -103,8 +66,47 @@ const HomeScreen = ({navigation}) => {
             longitude : location.coords.longitude
         });
     };
-    useEffect(()=>{
-        console.log('first use effect')
+    const _watchLocationAsync = async () => {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+          setErrorMsg('Permission to access location was denied');
+          return;
+        }
+  
+        let locations = await Location.watchPositionAsync({ accuracy: Location.Accuracy.High, distanceInterval: 1  }, (loc) => {
+          setCurrentLocation({
+                latitude : loc.coords.latitude,
+                longitude : loc.coords.longitude,
+            })
+            if(isTracking) {
+                setCoordinates( prev => [...prev, {
+                    latitude : loc.coords.latitude,
+                    longitude : loc.coords.longitude
+                }] );
+                let distanceCalculated = getPreciseDistance( prevCoords , { latitude: loc.coords.latitude, longitude: loc.coords.longitude } ) / 1000;
+                console.log('distance');
+
+                console.log(`${distanceCalculated} YOYOYOYO`);
+                // setTrack({ distance : distanceCalculated });
+                // setTrack({ distance : distanceCalculated});
+                //setTrack({ distance : distanceCalculated });
+                // if (distance > 0) {
+                //     setTrack({ distance : distance  });
+                // }
+                // setTrack(prev => ({
+                //         distance : prev.distance + haversine(prevCoords, { latitude : loc.coords.latitude, longitude : loc.coords.longitude }),
+                //     }))
+                if(loc.coords.speed > 0) setTrack(prev => ({ speed : Math.round((prev.speed + loc.coords.speed) / 2), distance : distanceCalculated }));
+                setPrevCoords({ latitude : loc.coords.latitude, longitude : loc.coords.longitude });
+            }
+        });
+
+    };
+
+
+    useEffect(() => {
+        setCoordinates([]);
+        setPrevCoords(getCurrentLocation);
         setTrack({
             distance : 0.0,
             speed : 0.0
@@ -115,16 +117,11 @@ const HomeScreen = ({navigation}) => {
             .then((json) => setWeather({ temperature : json.main.temp, loaded : true}))
             .catch((error) => console.error(error))
         }
-    },[]);
-
-    useEffect(() => {
-        setCoordinates([]);
-
         _getLocationAsync();
         _watchLocationAsync();
 
     },[isTracking])
-
+        console.log(track.distance);
      return(
         <SafeAreaView style={styles.home}>
             <Header navigation={navigation} />
@@ -146,14 +143,13 @@ const HomeScreen = ({navigation}) => {
                     strokeColor="black" // fallback for when `strokeColors` is not supported by the map-provider
 
                     />
-                
+
                 </MapView>
 
-                
             </View>
             {
                 isTracking?
-                    <TrackFooterCard setIsTracking={EndTrack} isTracking={isTracking} track={track} setTrack={setTrack} timer={timer} weather={weather}  />
+                    <TrackFooterCard setIsTracking={EndTrack} isTracking={isTracking} track={track} distance={track.distance} setTrack={setTrack} timer={timer} weather={weather}  />
                 :
                     <StartTrackingFooter setIsTracking={startTrack}  />
             }

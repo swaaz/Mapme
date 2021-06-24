@@ -17,6 +17,10 @@ const ShowMap = ({navigation}) => {
     const date = new Date;
     const saveHandler = () => {
         setUpdate({
+            location : {
+                lat: getCurrentLocation.latitude,
+                lng : getCurrentLocation.longitude
+            },
             time : timer,
             distance : track.distance,
             speed : track.speed,
