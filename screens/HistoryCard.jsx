@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Geocoder from 'react-native-geocoder';
 
 const HistoryCard = (props) => {
     
@@ -17,8 +16,27 @@ const HistoryCard = (props) => {
                     <Text style={styles.date}>{props.item.item.dateTime.month}</Text>
                     <Text style={styles.time}>{props.item.item.dateTime.hour}:{props.item.item.dateTime.minutes}</Text>
                 </View>
-                <Text style={styles.title}>Attavar, Mangalore</Text>
-                <Text style={styles.distance}>{props.item.item.distance} KM</Text>
+                <View style={styles.col}>
+                    <Text style={styles.subTag}>Avg. Speed</Text>
+                    <View style={styles.tagRow}>
+                        <Text style={styles.tagValue}>{props.item.item.speed}</Text>
+                        <Text style={styles.unit}>KMPH</Text>
+                    </View>
+                </View>
+                <View style={styles.col}>
+                    <Text style={styles.subTag}>Distance</Text>
+                    <View style={styles.tagRow}>
+                        <Text style={styles.tagValue}>{props.item.item.distance}</Text>
+                        <Text style={styles.unit}>KM</Text>
+                    </View>
+                </View>
+                <View style={styles.col}>
+                    <Text style={styles.subTag}>Temperature</Text>
+                    <View style={styles.tagRow}>
+                        <Text style={styles.tagValue}>{props.item.item.temperature}</Text>
+                        <Text style={styles.unit}>°C</Text>
+                    </View>
+                </View>
             </View>
         </TouchableOpacity>
     )
@@ -29,14 +47,16 @@ export default HistoryCard
 const styles = StyleSheet.create({
     card: {
         flexDirection: 'row',
-        width: '80%',
+        width: '85%',
         alignItems: 'center',
         marginVertical: 10,
         borderRadius: 10,
         borderWidth : 1,
         borderColor : 'grey',
-        marginHorizontal : '10%',
-        elevation : 1
+        marginHorizontal : '7%',
+        elevation : 1,
+        justifyContent : 'space-evenly'
+
     },
     column: {
         justifyContent: 'space-around',
@@ -51,13 +71,25 @@ const styles = StyleSheet.create({
     time: {
         fontSize: 10
     },
-    title : {
-        fontWeight: '100',
-        flex: 1,
-        textAlign: 'center'
+    col : {
+        alignItems : 'center',
+        justifyContent : 'space-around'
     },
-    distance: {
-        fontWeight: '900',
-        paddingHorizontal: 10
+    subTag : {
+        fontSize : 13
+    },
+    tagRow : {
+        flexDirection : 'row',
+        justifyContent : 'space-around',
+        alignItems : 'flex-end',
+    },
+    tagValue : {
+        fontSize : 30,
+        fontWeight : 'normal'
+    },
+    unit : {
+        fontSize : 10,
+        marginBottom : 5,
+        marginLeft : 2
     }
 })

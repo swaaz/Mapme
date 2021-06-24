@@ -4,8 +4,6 @@ import MapView, { Polyline } from 'react-native-maps';
 import StartTrackingFooter from './StartTrackingFooter';
 import TrackFooterCard from './TrackFooterCard';
 import * as Location from "expo-location";
-// import useLocation from '../hooks/useGeoLocation';
-// import {haversine} from 'haversine';
 import useTimer from '../hooks/useTimer';
 import Header from './Header';
 const haversine = require('haversine');
@@ -30,9 +28,6 @@ const HomeScreen = ({navigation}) => {
         loaded : false,
     });
    
-
-  
-
 
     const startTrack = () => {
         setCoordinates( [getCurrentLocation] );
@@ -60,7 +55,6 @@ const HomeScreen = ({navigation}) => {
         }
 
         let location = await Location.getCurrentPositionAsync({  accuracy: Location.Accuracy.High });
-        // this.setState({ location });
         setCurrentLocation({
             latitude : location.coords.latitude,
             longitude : location.coords.longitude
@@ -84,18 +78,6 @@ const HomeScreen = ({navigation}) => {
                     longitude : loc.coords.longitude
                 }] );
                 let distanceCalculated = getPreciseDistance( prevCoords , { latitude: loc.coords.latitude, longitude: loc.coords.longitude } ) / 1000;
-                console.log('distance');
-
-                console.log(`${distanceCalculated} YOYOYOYO`);
-                // setTrack({ distance : distanceCalculated });
-                // setTrack({ distance : distanceCalculated});
-                //setTrack({ distance : distanceCalculated });
-                // if (distance > 0) {
-                //     setTrack({ distance : distance  });
-                // }
-                // setTrack(prev => ({
-                //         distance : prev.distance + haversine(prevCoords, { latitude : loc.coords.latitude, longitude : loc.coords.longitude }),
-                //     }))
                 if(loc.coords.speed > 0) setTrack(prev => ({ speed : Math.round((prev.speed + loc.coords.speed) / 2), distance : distanceCalculated }));
                 setPrevCoords({ latitude : loc.coords.latitude, longitude : loc.coords.longitude });
             }
@@ -121,7 +103,6 @@ const HomeScreen = ({navigation}) => {
         _watchLocationAsync();
 
     },[isTracking])
-        console.log(track.distance);
      return(
         <SafeAreaView style={styles.home}>
             <Header navigation={navigation} />
@@ -140,7 +121,7 @@ const HomeScreen = ({navigation}) => {
                     <Polyline
                     coordinates={coordinates}
                     strokeWidth={6} 
-                    strokeColor="black" // fallback for when `strokeColors` is not supported by the map-provider
+                    strokeColor="black" 
 
                     />
 

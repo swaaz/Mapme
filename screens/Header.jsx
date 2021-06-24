@@ -17,7 +17,7 @@ const Header = ({navigation}) => {
                 style={styles.logo}
             />
             <Image
-                source={require('../assets/icons/profile.png')}
+                source={require('../assets/icons/Tomas.png')}
                 style={styles.profile}
             />
         </View>
@@ -47,10 +47,11 @@ const styles = StyleSheet.create({
     },
     logo : {
         width: 30,
-        height: 30
+        height: 30,
+        marginLeft: 25
     },
     profile : {
-        width: 30,
-        height: 30
+        width: 55,
+        height: 55
     },
 })

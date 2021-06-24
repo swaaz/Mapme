@@ -4,7 +4,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 const StartTrackingFooter = (props) => {
     return (
         <View style={styles.footer}>
-            <View style={styles.rowOne}>
+            {/* <View style={styles.rowOne}>
                 <TouchableOpacity>
                     <View style={styles.circleButtons}>
                         <Image
@@ -21,7 +21,7 @@ const StartTrackingFooter = (props) => {
                         />
                     </View>
                 </TouchableOpacity>
-            </View>
+            </View> */}
             <TouchableOpacity
                 onPress={props.setIsTracking}
             >
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         width: '100%',
         height: 130,
-        bottom: 20,
+        bottom: 10,
         paddingHorizontal: 20,
         justifyContent : 'space-around'
 

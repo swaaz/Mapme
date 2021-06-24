@@ -16,7 +16,7 @@ const History = ({navigation}) => {
             <FlatList
             style={styles.list}
             data={history.reverse()}
-            renderItem={(item) => <HistoryCard navigation={navigation} item={item} />}
+            renderItem={(item,key) => <HistoryCard key={key} navigation={navigation} item={item} />}
             />
         </View>
         </>
