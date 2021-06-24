@@ -103,20 +103,25 @@ const HomeScreen = ({navigation}) => {
             longitude : location.coords.longitude
         });
     };
-  
-    useEffect(() => {
+    useEffect(()=>{
+        console.log('first use effect')
         setTrack({
-            distance : 0.0
+            distance : 0.0,
+            speed : 0.0
         });
-        setCoordinates([]);
-        _getLocationAsync();
-          if(!weather.loaded){
+        if(!weather.loaded){
             fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${getCurrentLocation.latitude}&lon=${getCurrentLocation.longitude}&units=metric&appid=`)
             .then((response) => response.json())
             .then((json) => setWeather({ temperature : json.main.temp, loaded : true}))
             .catch((error) => console.error(error))
-          }
-          _watchLocationAsync();
+        }
+    },[]);
+
+    useEffect(() => {
+        setCoordinates([]);
+
+        _getLocationAsync();
+        _watchLocationAsync();
 
     },[isTracking])
 
