@@ -3,8 +3,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { Stopwatch } from 'react-native-stopwatch-timer';
 import { formatTime } from '../utils/index';
 const TrackFooterCard = (props) => {
-    // console.log('dis inside');
-    // console.log(props.distance);
+ 
 
     return (
         <View style={styles.footer}>

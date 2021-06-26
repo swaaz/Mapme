@@ -94,7 +94,7 @@ const HomeScreen = ({navigation}) => {
             speed : 0.0
         });
         if(!weather.loaded){
-            fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${getCurrentLocation.latitude}&lon=${getCurrentLocation.longitude}&units=metric&appid=`)
+            fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${getCurrentLocation.latitude}&lon=${getCurrentLocation.longitude}&units=metric&appid=47902e57d5566b7125fe399170fc2c60`)
             .then((response) => response.json())
             .then((json) => setWeather({ temperature : json.main.temp, loaded : true}))
             .catch((error) => console.error(error))
