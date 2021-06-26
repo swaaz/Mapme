@@ -70,3 +70,8 @@ npm install
 ```
 expo build
 ```
+### Resources 📚
+- [Expo Documentation](https://docs.expo.io/)
+- [React Native](https://reactnative.dev/)
+- [Map View](https://docs.expo.io/versions/latest/sdk/map-view/)
+- [Location API](https://docs.expo.io/versions/latest/sdk/location/)
