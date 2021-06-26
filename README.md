@@ -26,7 +26,7 @@ git clone <url>
 - example : `git clone https://github.com/swaaz/Mapme.git`
 
 ## Add API key before building 🔑
-We can’t afford Google’s API. 😢
+We can’t afford Google’s API for everyone. 😢
 ### Open [Google Developer Page](https://developers.google.com/maps/documentation/android-sdk/get-api-key)
 copy the API key and paste it inside `~Mapme/app.json`
 ```
@@ -70,3 +70,8 @@ npm install
 ```
 expo build
 ```
+### Resources 📚
+- [Expo Documentation](https://docs.expo.io/)
+- [React Native](https://reactnative.dev/)
+- [Map View](https://docs.expo.io/versions/latest/sdk/map-view/)
+- [Location API](https://docs.expo.io/versions/latest/sdk/location/)
