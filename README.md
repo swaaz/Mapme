@@ -9,7 +9,7 @@
  FYI, We aren’t facebook to collect your data! 😅
  
  # About
- Cross Platform app built using React Native and Async storage with the help of Google Map API.
+ A location tracking application for mobile devices built by The Boys as Minor Project. MapMe tracks your location and give you details on the route, average speed,time and distance covered. To track just tap on 'Start Tracking' and the app will now start collecting your coordinates and starts to draw PolyLines which are used to depict a route from one place to another. You can also view your tracked history and all these details are not collected by us, it is safely stored on your personal device.
  
  # What's in here?
  - React Native :atom:
