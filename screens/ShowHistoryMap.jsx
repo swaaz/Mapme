@@ -25,7 +25,7 @@ const ShowHistoryMap = ({navigation}) => {
                     style={styles.logo}
                 />
                 <Image
-                    source={require('../assets/icons/profile.png')}
+                    source={require('../assets/icons/Tomas.png')}
                     style={styles.profile}
                 />
             </View>
@@ -94,8 +94,8 @@ const styles = StyleSheet.create({
         height: 30
     },
     profile : {
-        width: 30,
-        height: 30
+        width: 55,
+        height: 55
     },
     maps: {
         width: '100%',
