@@ -79,6 +79,9 @@ npm install
 ```
 expo build
 ```
+## If you think you can work and contribute to it and actually make something more cool out of it? 🐛
+Then check this [issue](https://github.com/swaaz/Mapme/issues/20)
+
 ### Resources 📚
 - [Expo Documentation](https://docs.expo.io/)
 - [React Native](https://reactnative.dev/)
