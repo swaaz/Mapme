@@ -6,7 +6,7 @@
  </p>
  
   # Disclaimer 📖
- FYI, We aren’t facebook to collect your data! 😅
+ `FYI, We aren’t facebook to collect your data!` 😅
  
  # About 📌
  A location tracking application for mobile devices built by The Boys as Minor Project. MapMe tracks your location and give you details on the route, average speed,time and distance covered. To track just tap on 'Start Tracking' and the app will now start collecting your coordinates and starts to draw PolyLines which are used to depict a route from one place to another. You can also view your tracked history and all these details are not collected by us, it is safely stored on your personal device.
@@ -15,6 +15,15 @@
  - React Native :atom:
  - Async Storage 🗄️
  - GoogleMaps API 🗺️
+ 
+ 
+<p>
+  <div align="center">
+    <img src="./readme/mockup.png" width="100%"/>
+   </div>
+ </p>
+ 
+ 
 # How to Build the App 📱
 
 ## Fork the repo 🍴
